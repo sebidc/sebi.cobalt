@@ -8,9 +8,9 @@ Visitors only paste a public media link, choose a format, and save the file. The
 
 ## Deployment status
 
-The frontend is hosted on GitHub Pages. **A real backend still needs to be deployed and connected.** Until that is done, the page shows that downloads are being prepared and disables the download button. It does not claim downloads are available or silently redirect visitors elsewhere.
+The frontend is hosted on GitHub Pages. The official cobalt backend is deployed on Render’s Free plan at **https://sebi-cobalt-api.onrender.com/** and is configured globally in `config.js`. Visitors never need a server address or account. When no endpoint is configured, the page clearly marks downloads as unavailable rather than showing setup prompts.
 
-## Owner setup: free Render backend
+## Owner maintenance: free Render backend
 
 [Deploy the prepared backend to Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fsebidc%2Fsebi.cobalt)
 
