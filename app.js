@@ -22,6 +22,18 @@ function safeUrl(value) {
   if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) throw new Error('Please use a complete HTTP or HTTPS link.');
   return url;
 }
+function hideYoutubeFallback() {
+  $('#youtube-fallback').hidden = true;
+  $('#youtube-fallback-link').removeAttribute('href');
+}
+function offerYoutubeFallback(mediaUrl) {
+  const url = safeUrl(mediaUrl);
+  try { if (safeUrl(input.value).href !== url.href) return; } catch { return; }
+  const host = url.hostname.toLowerCase();
+  if (host !== 'youtu.be' && host !== 'youtube.com' && !host.endsWith('.youtube.com') && host !== 'youtube-nocookie.com' && !host.endsWith('.youtube-nocookie.com')) return;
+  $('#youtube-fallback-link').href = `https://cobalt.meowing.de/#${encodeURIComponent(url.href)}`;
+  $('#youtube-fallback').hidden = false;
+}
 function serverUrl(value) {
   const url = safeUrl(value);
   const local = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
@@ -83,6 +95,7 @@ function addFile(urlValue, filename) {
 $('#save-form').addEventListener('submit', async event => {
   event.preventDefault();
   if (busy) return;
+  hideYoutubeFallback();
   let mediaUrl;
   try { mediaUrl = safeUrl(input.value).href; }
   catch { input.setAttribute('aria-invalid', 'true'); showStatus('Paste a complete public link beginning with https://.', true); input.focus(); return; }
@@ -117,6 +130,7 @@ $('#save-form').addEventListener('submit', async event => {
   } catch (error) {
     clearResults();
     showStatus(controller.signal.aborted ? 'Request stopped. You can try again.' : error instanceof TypeError ? 'The download service could not be reached. Please try again in a minute.' : error.message, true);
+    if (!controller.signal.aborted) offerYoutubeFallback(mediaUrl);
   } finally { clearTimeout(timer); if (activeRequest === controller) activeRequest = null; setBusy(false); }
 });
 
@@ -155,9 +169,9 @@ async function saveFile(url, filename) {
 }
 
 $('#cancel-button').addEventListener('click', () => activeRequest?.abort());
-input.addEventListener('input', () => { input.removeAttribute('aria-invalid'); if (!busy) showStatus(''); });
+input.addEventListener('input', () => { input.removeAttribute('aria-invalid'); hideYoutubeFallback(); if (!busy) showStatus(''); });
 $('#paste-button').addEventListener('click', async () => {
-  try { input.value = (await navigator.clipboard.readText()).trim(); input.focus(); showStatus(input.value ? 'Link pasted. Choose your format below.' : 'Your clipboard is empty.'); }
+  try { hideYoutubeFallback(); input.value = (await navigator.clipboard.readText()).trim(); input.focus(); showStatus(input.value ? 'Link pasted. Choose your format below.' : 'Your clipboard is empty.'); }
   catch { input.focus(); showStatus('Paste with ⌘V on Mac or Ctrl+V on Windows.'); }
 });
 document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => {

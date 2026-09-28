@@ -5,10 +5,10 @@
 <title>sebi.cobalt — save what you love</title>
 <meta name="description" content="A little downloader for public videos, audio and photos.">
 <meta name="theme-color" content="#333c43"><meta name="referrer" content="no-referrer">
-<link rel="icon" href="assets/icon.png"><link rel="stylesheet" href="style.css?v=service-top-panel-1">
+<link rel="icon" href="assets/icon.png"><link rel="stylesheet" href="style.css?v=youtube-fallback-1">
 <link rel="preload" href="assets/fonts/agrandir-grand-heavy.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/gramatika-regular.otf" as="font" type="font/otf" crossorigin>
-<script src="config.js" defer></script><script src="app.js?v=service-top-panel-1" defer></script>
+<script src="config.js" defer></script><script src="app.js?v=youtube-fallback-1" defer></script>
 </head>
 <body>
 <aside class="rail" aria-label="Navigation">
@@ -28,6 +28,7 @@
 <details class="options"><summary>quality options</summary><label class="quality-label" for="quality">Video quality <select id="quality"><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="max">Best available</option></select></label></details>
 </form>
 <p id="status" class="status" role="status" aria-live="polite"></p>
+<div id="youtube-fallback" class="youtube-fallback" hidden><p>YouTube unavailable here? Try this link on meowing.de.</p><a id="youtube-fallback-link" class="button primary" target="_blank" rel="noopener noreferrer">Open on meowing.de ↗</a><small>Opens another site in a new tab and starts the download there.</small></div>
 <div id="progress-area" hidden><progress id="progress" max="100" aria-label="Download progress"></progress><button id="cancel-button" class="small-button" type="button">Cancel</button></div>
 <div id="results" class="results" aria-label="Files ready to download" hidden></div>
 <div id="setup-note" class="setup-note">Downloads are getting ready. There’s nothing to set up on your device.</div>

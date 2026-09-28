@@ -26,3 +26,5 @@ body:has(#services-dialog[open]) .services-button{visibility:hidden}
 @keyframes services-backdrop{from{opacity:0}to{opacity:1}}
 @keyframes services-exit{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-5px)}}
 @keyframes services-backdrop-exit{from{opacity:1}to{opacity:0}}
+
+.youtube-fallback{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--dim)}.youtube-fallback p{font-size:13px;margin:0 0 10px}.youtube-fallback small{display:block;color:var(--muted);font-size:11px;margin-top:9px}.youtube-fallback .button{font-size:13px}
