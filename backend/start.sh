@@ -10,4 +10,4 @@ API_URL="${API_URL%/}/"
 API_PORT="${API_PORT:-${PORT:-10000}}"
 API_LISTEN_ADDRESS="${API_LISTEN_ADDRESS:-0.0.0.0}"
 export API_URL API_PORT API_LISTEN_ADDRESS
-exec node src/cobalt
+exec node /app/supervisor.mjs
