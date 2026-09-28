@@ -1,62 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#151419">
-  <meta name="description" content="Your little shortcut to saving what you love. Paste a link and continue with cobalt on meowing.de.">
-  <meta name="referrer" content="no-referrer">
-  <title>sebi.cobalt — save something good</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
-  <script src="./app.js" defer></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sebi.cobalt — a little save for every moment</title>
+<meta name="description" content="Save public videos, audio, and photos in one little corner of the internet.">
+<meta name="theme-color" content="#333c43"><meta name="referrer" content="no-referrer">
+<link rel="icon" href="assets/icon.png"><link rel="stylesheet" href="style.css">
+<link rel="preload" href="assets/fonts/agrandir-grand-heavy.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/gramatika-regular.otf" as="font" type="font/otf" crossorigin>
+<script src="config.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="./" aria-label="sebi.cobalt home"><span class="brand-mark" aria-hidden="true">s.</span>sebi<span class="brand-soft">.cobalt</span></a>
-      <nav aria-label="Main navigation">
-        <button class="nav-button" id="about-button" type="button">about</button>
-        <a class="nav-button" href="https://github.com/sebidc/sebi.cobalt" target="_blank" rel="noopener noreferrer">source <span aria-hidden="true">↗</span></a>
-      </nav>
-    </header>
-
-    <main>
-      <div class="intro">
-        <div class="eyebrow"><span class="small-star" aria-hidden="true">✳</span> a little corner of the internet</div>
-        <h1>save something<br><span>good.</span></h1>
-        <p>A video, a song, a moment worth keeping.<br>Start with a link.</p>
-      </div>
-
-      <section class="save-card" aria-labelledby="card-title">
-        <div class="card-heading"><h2 id="card-title">what are we saving?</h2><span class="step-label">01 / paste a link</span></div>
-        <form id="save-form" novalidate>
-          <label class="sr-only" for="media-url">Public video, audio, or post URL</label>
-          <div class="input-wrap">
-            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m10 13 4-4m-5 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m0 10a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-1 1"/></svg>
-            <input id="media-url" name="url" type="url" placeholder="paste your link here" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="status handoff-note">
-            <button id="paste-button" class="paste-button" type="button">paste</button>
-          </div>
-          <p id="status" class="status" role="status" aria-live="polite"></p>
-          <button class="continue-button" type="submit">continue on meowing.de <span aria-hidden="true">↗</span></button>
-        </form>
-        <p class="handoff-note" id="handoff-note">Your link opens in cobalt on meowing.de.<br>Choose your format and finish downloading there.</p>
-        <div class="card-bottom"><span class="status-dot" aria-hidden="true"></span> uses the meowing.de download page <span class="tiny-arrow" aria-hidden="true">↗</span></div>
-      </section>
-
-      <div class="details"><span><span aria-hidden="true">⌘</span> just a link</span><span><span aria-hidden="true">♡</span> no account here</span><span><span aria-hidden="true">◌</span> no tracking here</span></div>
-      <p class="quiet-note">For public content you have permission to save.</p>
-    </main>
-
-    <footer><span>made for sebi <span class="footer-star" aria-hidden="true">✳</span></span><span>inspired by <a href="https://cobalt.meowing.de/" target="_blank" rel="noopener noreferrer">cobalt.meowing.de ↗</a></span></footer>
-  </div>
-
-  <dialog id="about-dialog" aria-labelledby="about-title">
-    <div class="dialog-heading"><h2 id="about-title">a little about sebi.cobalt</h2><button id="close-about" type="button" aria-label="Close about">×</button></div>
-    <p>This is an independent shortcut to <a href="https://cobalt.meowing.de/" target="_blank" rel="noopener noreferrer">cobalt on meowing.de</a>, inspired by its simple paste-and-save experience.</p>
-    <p>When you continue, your link is passed to meowing.de in the address fragment. Their website handles the download, available formats, and any browser challenge.</p>
-    <p>This page has no analytics and does not store your links. The receiving website has its own policies. We are not affiliated with cobalt or the meowing.de operator.</p>
-    <a class="about-link" href="https://github.com/imputnet/cobalt" target="_blank" rel="noopener noreferrer">meet the original cobalt project ↗</a>
-  </dialog>
+<header class="nav wrap">
+<a class="wordmark" href="./">sebi<span>.cobalt</span><i aria-hidden="true">✳</i></a>
+<div class="header-actions"><nav aria-label="Main navigation"><a href="https://sebidc.github.io/sebi.emojis/">sebi.emojis ↗</a><button id="settings-button" type="button">settings</button><a href="https://github.com/sebidc/sebi.cobalt">GitHub ↗</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode"><span aria-hidden="true">☀</span><span class="theme-label">Light mode</span></button></div>
+</header>
+<main>
+<section class="hero wrap" aria-labelledby="title">
+<div class="hero-copy"><p class="eyebrow"><span></span> THE LITTLE SEBI DOWNLOADER</p><h1 id="title">A little save.<br>For every <em>moment.</em></h1><p class="intro">For the songs on repeat, favorite clips, and things worth keeping. Paste a link. Make it yours.</p><a class="text-link" href="#save">save something good <span>↓</span></a><p class="fine">Videos · audio · photos · all in one little place</p></div>
+<div class="hero-art" aria-hidden="true"><div class="orbit"></div><span class="art-note">good finds.<br>little keeps.</span><img class="hero-headphones" src="assets/stickers/headphones.png" alt=""><img class="hero-camera" src="assets/stickers/camera.png" alt=""><img class="hero-drink" src="assets/stickers/bubble-tea.png" alt=""><span class="art-star star-one">✳</span><span class="art-star star-two">✧</span><span class="art-tag">a little keeper energy</span></div>
+</section>
+<section class="downloader wrap" id="save" aria-labelledby="save-title">
+<div class="section-heading"><div><p class="eyebrow">SAVE SOMETHING GOOD</p><h2 id="save-title">Keep your little find.</h2></div><button class="connection" id="connection-button" type="button"><span class="connection-dot"></span><span id="connection-text">Connect download server</span></button></div>
+<form id="save-form" novalidate>
+<label class="sr-only" for="media-url">Public video, audio, or post URL</label><div class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 13 4-4m-5 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m0 10a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-1 1"/></svg><input id="media-url" type="url" placeholder="Paste your video, song, or post link…" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="status"><button id="paste-button" class="paste-button" type="button">Paste</button></div>
+<div class="options-row"><div class="modes" role="group" aria-label="Download format"><button type="button" data-mode="auto" aria-pressed="true">Video + audio</button><button type="button" data-mode="audio" aria-pressed="false">Audio only</button><button type="button" data-mode="mute" aria-pressed="false">Video only</button></div><label class="quality-label">Quality <select id="quality"><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="max">Best available</option></select></label></div>
+<div class="submit-row"><p>Your download happens here.<br><span>For public content you have permission to save.</span></p><button id="download-button" class="button primary" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>Get download</button></div>
+</form>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+<div id="progress-area" hidden><progress id="progress" max="100" aria-label="Download progress"></progress><button id="cancel-button" class="small-button" type="button">Cancel</button></div>
+<div id="results" class="results" aria-label="Files ready to download" hidden></div>
+<div class="setup-note" id="setup-note"><span aria-hidden="true">✳</span><p><strong>One little setup step.</strong> Connect your download server in settings to start saving. This website is ready; a server hasn’t been connected yet.</p><button id="setup-button" class="text-button" type="button">Connect server →</button></div>
+</section>
+<section class="details wrap" aria-label="How downloading works"><div><span class="detail-icon">01</span><h3>Find something good.</h3><p>Copy a public video, audio, or post link.</p></div><div><span class="detail-icon">02</span><h3>Make it your format.</h3><p>Choose video, audio, or a silent clip.</p></div><div><span class="detail-icon">03</span><h3>Keep it right here.</h3><p>Save the file without leaving this page.</p></div></section>
+</main>
+<footer class="wrap"><a class="wordmark" href="./">sebi<span>.cobalt</span></a><p>Made for all the little moments.</p><a href="https://github.com/imputnet/cobalt">built for cobalt servers ↗</a></footer>
+<dialog id="settings-dialog" aria-labelledby="settings-title"><button class="close" id="close-settings" type="button" aria-label="Close settings">×</button><p class="eyebrow">YOUR LITTLE SETUP</p><h2 id="settings-title">Connect your server.</h2><p>Use a cobalt server you run, or one whose owner allows this website to connect. Meowing.de’s protected server isn’t connected here.</p><form id="settings-form"><label for="server-url">Download server address</label><input id="server-url" type="url" placeholder="https://your-server.example/" autocomplete="off"><label for="api-key">API key <span>(optional)</span></label><input id="api-key" type="password" autocomplete="off" placeholder="Only if your server needs one"><p class="settings-fine">The address is remembered on this device. The key is only kept for this open page and is sent only to your server.</p><p id="settings-status" class="status" role="status"></p><div class="settings-buttons"><button class="button primary" type="submit">Save connection</button><button id="forget-server" class="button secondary" type="button">Disconnect</button></div></form></dialog>
+<noscript><p class="wrap">Enable JavaScript to connect your server and download files.</p></noscript>
 </body>
 </html>
