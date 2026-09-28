@@ -10,7 +10,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: .
     healthCheckPath: /
-    autoDeployTrigger: off
+    autoDeployTrigger: "off"
     envVars:
       - key: CORS_WILDCARD
         value: "0"
