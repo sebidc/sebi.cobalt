@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151419">
+  <meta name="description" content="Your little shortcut to saving what you love. Paste a link and continue with cobalt on meowing.de.">
+  <meta name="referrer" content="no-referrer">
+  <title>sebi.cobalt — save something good</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="./" aria-label="sebi.cobalt home"><span class="brand-mark" aria-hidden="true">s.</span>sebi<span class="brand-soft">.cobalt</span></a>
+      <nav aria-label="Main navigation">
+        <button class="nav-button" id="about-button" type="button">about</button>
+        <a class="nav-button" href="https://github.com/sebidc/sebi.cobalt" target="_blank" rel="noopener noreferrer">source <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="intro">
+        <div class="eyebrow"><span class="small-star" aria-hidden="true">✳</span> a little corner of the internet</div>
+        <h1>save something<br><span>good.</span></h1>
+        <p>A video, a song, a moment worth keeping.<br>Start with a link.</p>
+      </div>
+
+      <section class="save-card" aria-labelledby="card-title">
+        <div class="card-heading"><h2 id="card-title">what are we saving?</h2><span class="step-label">01 / paste a link</span></div>
+        <form id="save-form" novalidate>
+          <label class="sr-only" for="media-url">Public video, audio, or post URL</label>
+          <div class="input-wrap">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m10 13 4-4m-5 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m0 10a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-1 1"/></svg>
+            <input id="media-url" name="url" type="url" placeholder="paste your link here" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="status handoff-note">
+            <button id="paste-button" class="paste-button" type="button">paste</button>
+          </div>
+          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <button class="continue-button" type="submit">continue on meowing.de <span aria-hidden="true">↗</span></button>
+        </form>
+        <p class="handoff-note" id="handoff-note">Your link opens in cobalt on meowing.de.<br>Choose your format and finish downloading there.</p>
+        <div class="card-bottom"><span class="status-dot" aria-hidden="true"></span> uses the meowing.de download page <span class="tiny-arrow" aria-hidden="true">↗</span></div>
+      </section>
+
+      <div class="details"><span><span aria-hidden="true">⌘</span> just a link</span><span><span aria-hidden="true">♡</span> no account here</span><span><span aria-hidden="true">◌</span> no tracking here</span></div>
+      <p class="quiet-note">For public content you have permission to save.</p>
+    </main>
+
+    <footer><span>made for sebi <span class="footer-star" aria-hidden="true">✳</span></span><span>inspired by <a href="https://cobalt.meowing.de/" target="_blank" rel="noopener noreferrer">cobalt.meowing.de ↗</a></span></footer>
+  </div>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <div class="dialog-heading"><h2 id="about-title">a little about sebi.cobalt</h2><button id="close-about" type="button" aria-label="Close about">×</button></div>
+    <p>This is an independent shortcut to <a href="https://cobalt.meowing.de/" target="_blank" rel="noopener noreferrer">cobalt on meowing.de</a>, inspired by its simple paste-and-save experience.</p>
+    <p>When you continue, your link is passed to meowing.de in the address fragment. Their website handles the download, available formats, and any browser challenge.</p>
+    <p>This page has no analytics and does not store your links. The receiving website has its own policies. We are not affiliated with cobalt or the meowing.de operator.</p>
+    <a class="about-link" href="https://github.com/imputnet/cobalt" target="_blank" rel="noopener noreferrer">meet the original cobalt project ↗</a>
+  </dialog>
+</body>
+</html>
