@@ -172,9 +172,21 @@ if (location.hash.length > 1 && location.hash !== '#save') {
 }
 
 const servicesDialog = $('#services-dialog');
+let servicesCloseTimer;
+function closeServices() {
+  if (!servicesDialog.open || servicesDialog.classList.contains('is-closing')) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { servicesDialog.close(); return; }
+  servicesDialog.classList.add('is-closing');
+  servicesCloseTimer = setTimeout(() => servicesDialog.close(), 160);
+}
 $('#services-button').addEventListener('click', () => servicesDialog.showModal());
-$('#services-close').addEventListener('click', () => servicesDialog.close());
+$('#services-close').addEventListener('click', closeServices);
+servicesDialog.addEventListener('cancel', event => { event.preventDefault(); closeServices(); });
+servicesDialog.addEventListener('close', () => {
+  clearTimeout(servicesCloseTimer);
+  servicesDialog.classList.remove('is-closing');
+});
 servicesDialog.addEventListener('click', event => {
   const bounds = servicesDialog.getBoundingClientRect();
-  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) servicesDialog.close();
+  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeServices();
 });

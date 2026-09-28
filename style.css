@@ -11,3 +11,15 @@
 /* Compact service tags, matching the reference layout. */
 #services-dialog{background:transparent;border:0;box-shadow:none;padding:12px;width:min(730px,calc(100vw - 24px))}.services-heading{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:25px}.services-heading h2{font-family:Gramatika,sans-serif;font-size:22px;letter-spacing:0}.services-heading .close{position:static;display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:var(--surface);color:var(--fg);font-size:28px;line-height:1}.services-card{padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 45px #0003}.services-list{display:flex;flex-wrap:wrap;gap:6px}.services-list li{display:block;background:var(--surface);border:0;border-radius:9px;padding:7px 12px;font-size:18px;font-weight:700}.services-note{font-size:17px;line-height:1.55;margin:15px 0 0}.services-availability{font-size:11px;color:var(--yellow);margin:15px 0 0}@media(max-width:600px){.services-heading{gap:10px;margin-bottom:18px}.services-heading h2{font-size:18px}.services-card{padding:17px;border-radius:20px}.services-list li{font-size:14px;padding:6px 9px}.services-note{font-size:14px}}
 @media(min-width:601px){.services-list li{font-size:26px;padding:7px 14px}.services-note{font-size:21px}.services-heading h2{font-size:25px}}
+
+/* Geometric icon centering avoids the font's off-center plus glyph. */
+.services-button>.services-plus{display:grid;place-items:center;flex-shrink:0;padding:0}.services-plus svg{width:17px;height:17px;stroke-width:2;transition:transform .2s ease}.services-button:hover .services-plus svg{transform:rotate(90deg)}
+#services-dialog[open]{animation:services-enter .22s ease-out both}#services-dialog[open]::backdrop{animation:services-backdrop .22s ease-out both}
+#services-dialog[open] .services-card{animation:services-card-enter .26s cubic-bezier(.2,.8,.2,1) both}
+#services-dialog.is-closing{animation:services-exit .16s ease-in both}#services-dialog.is-closing::backdrop{animation:services-backdrop-exit .16s ease-in both}
+#services-dialog.is-closing .services-card{animation:none}
+@keyframes services-enter{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes services-card-enter{from{transform:translateY(5px) scale(.98)}to{transform:translateY(0) scale(1)}}
+@keyframes services-backdrop{from{opacity:0}to{opacity:1}}
+@keyframes services-exit{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-5px)}}
+@keyframes services-backdrop-exit{from{opacity:1}to{opacity:0}}
