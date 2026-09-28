@@ -20,8 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The MIT license above covers this repository’s original frontend and supervisor code.
-The cobalt modifications in backend/patch-cobalt.mjs are AGPL-3.0.
-The separately installed bgutil provider is GPL-3.0-only.
+The MIT license above covers this repository’s original frontend and deployment code.
+The separately built cobalt API and Patrick’s public fork are AGPL-3.0.
 Fonts, icon, and sticker images under assets/ originate from sebi.emojis
 and retain their original owners’ rights and licensing terms.
