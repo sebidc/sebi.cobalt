@@ -1,0 +1,26 @@
+# Owner-only setup. The frontend stays on GitHub Pages.
+# No paid resources, database, disk, or background worker are requested.
+services:
+  - type: web
+    name: sebi-cobalt-api
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    autoDeployTrigger: off
+    envVars:
+      - key: CORS_WILDCARD
+        value: "0"
+      - key: CORS_URL
+        value: https://sebidc.github.io
+      - key: API_LISTEN_ADDRESS
+        value: 0.0.0.0
+      - key: DURATION_LIMIT
+        value: "1200"
+      - key: RATELIMIT_MAX
+        value: "10"
+      - key: TUNNEL_LIFESPAN
+        value: "180"

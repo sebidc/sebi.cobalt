@@ -4,26 +4,44 @@ A personal cobalt frontend styled to match [sebi.emojis](https://sebidc.github.i
 
 **Website:** https://sebidc.github.io/sebi.cobalt/
 
-## Current status
+Visitors only paste a public media link, choose a format, and save the file. There is **no server-address field, API-key prompt, or connection setup for visitors**. The site owner configures the download backend once in `config.js`; previous per-device server settings are ignored.
 
-The GitHub Pages frontend supports direct cobalt API requests, video/audio/mute selection, file pickers, download progress, cancellation, and saving files without navigating away. **No download backend is configured yet.** The previous redirect/handoff to meowing.de has been removed.
+## Deployment status
 
-Connect a cobalt API you own or have operator permission to use in Settings, or set `apiUrl` in `config.js`. Use an HTTPS endpoint for a public backend. `http://localhost:9000/` is accepted for a local backend, subject to browser local-network permissions.
+The frontend is hosted on GitHub Pages. **A real backend still needs to be deployed and connected.** Until that is done, the page shows that downloads are being prepared and disables the download button. It does not claim downloads are available or silently redirect visitors elsewhere.
 
-The backend must allow this frontend's origin (`https://sebidc.github.io`) via CORS and support server-side processing. API keys can be entered in settings; they remain in page memory and are never stored or sent to media hosts. A backend using Turnstile must configure this origin and an appropriate authentication flow; this client does not reuse another site's challenge keys or sessions. Hosted cobalt APIs require operator permission for external projects: [API docs](https://github.com/imputnet/cobalt/blob/main/docs/api.md).
+## Owner setup: free Render backend
+
+[Deploy the prepared backend to Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fsebidc%2Fsebi.cobalt)
+
+1. Sign in to Render as the site owner and create a Blueprint from this repository using `render.yaml`.
+2. Confirm the service uses the **Free** compute plan. The Blueprint requests only one free web service, no paid disk or database.
+3. Render builds `backend/Dockerfile`, which wraps cobalt's official `ghcr.io/imputnet/cobalt:11` image. The startup script uses `RENDER_EXTERNAL_URL` automatically so generated download tunnels have the correct address.
+4. After deployment, connect the actual Render service URL once:
+   ```sh
+   node scripts/connect-backend.mjs https://ACTUAL-SERVICE.onrender.com/
+   ```
+   The script checks the cobalt response and the CORS configuration before updating `config.js`.
+5. Publish that change to GitHub Pages. All visitors then use the configured endpoint automatically, without entering anything.
+
+The prepared server permits the GitHub Pages origin, retains cobalt's rate limiting, and limits media to 20 minutes. No secret API key is embedded in the public frontend.
+
+Render's free services sleep after 15 idle minutes and can take about a minute to resume. This client allows three minutes for resolving a download and requests proxying for file downloads. Free bandwidth and outbound-traffic limits apply; without a payment method, services are suspended when included bandwidth is exhausted. This is a hobby setup, not unlimited public download hosting. See [Render's current free-service limitations](https://render.com/docs/free).
+
+Platform support depends on the backend, its server IP, and any required platform session/cookie configuration. In particular, a fresh server might need additional setup for YouTube. Do not copy credentials or challenge keys from another instance. Hosted cobalt instances require operator permission for external use: [cobalt API docs](https://github.com/imputnet/cobalt/blob/main/docs/api.md).
 
 ## Download behavior
 
-`POST /` resolves media using `localProcessing: disabled`. Tunnel and redirect responses become Save file buttons. Picker responses become individual file buttons. The browser fetches files, displays progress when size information exists, and saves a Blob through its download manager; the page stays open. Media URLs must allow browser fetching. Large downloads consume browser memory because the file is buffered before saving. Unsupported browser-processing-only responses and blocked fetches show an explicit error.
+`POST /` resolves media with `localProcessing: disabled` and `alwaysProxy: true`. Tunnel and redirect responses become Save file buttons; picker responses become individual file buttons. The browser fetches files, displays progress when size information exists, and saves a Blob through its download manager without navigating away. Large downloads consume browser memory because the file is buffered before saving. Unsupported responses and failed requests show an error; visitors are never asked to fix a server configuration.
 
-## Hosting and preview
+## Frontend hosting and preview
 
-GitHub Pages: **Deploy from a branch → main → / (root)**. No build needed.
+GitHub Pages: **Deploy from a branch → main → / (root)**. No build required.
 
 Local preview: `python3 -m http.server 8087 --bind 127.0.0.1`, then open `http://localhost:8087`.
 
 ## Design and credits
 
-The slate/cream/green palette, typography, header, hero layout, and Sebi sticker assets match the user's [sebi.emojis repository](https://github.com/sebidc/sebi.emojis). Fonts, icon, and three sticker assets were copied from that repository at the user's request and retain their original ownership and license terms. The MIT license applies to original code written for this repository, not these third-party assets.
+The slate/cream/green palette, typography, header, hero layout, and Sebi sticker assets match the user's [sebi.emojis repository](https://github.com/sebidc/sebi.emojis). Fonts, icon, and three sticker assets were copied at the user's request and retain their original ownership and license terms. The MIT license applies to original code written for this repository, not those assets.
 
-Original downloader API: [imputnet/cobalt](https://github.com/imputnet/cobalt). Initial reference: [cobalt.meowing.de](https://cobalt.meowing.de/). No cobalt code, mascots, backend credentials, or protected-site authentication tokens are included. This is an independent client, unaffiliated with those operators.
+Original downloader API: [imputnet/cobalt](https://github.com/imputnet/cobalt). Initial reference: [cobalt.meowing.de](https://cobalt.meowing.de/). No cobalt API source, mascots, backend credentials, or protected-site authentication tokens are copied into this frontend. This project is unaffiliated with those operators.

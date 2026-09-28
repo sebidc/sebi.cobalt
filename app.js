@@ -2,17 +2,16 @@
 const $ = selector => document.querySelector(selector);
 const input = $('#media-url');
 const status = $('#status');
-const settings = $('#settings-dialog');
 let mode = 'auto';
-let apiUrl = window.SEBI_COBALT_CONFIG?.apiUrl || '';
-let apiKey = '';
+const apiUrl = window.SEBI_COBALT_CONFIG?.apiUrl || '';
 let activeRequest = null;
 let busy = false;
 const MAX_DOWNLOAD_MS = 30 * 60 * 1000;
 
 function remember(name, value) { try { value ? localStorage.setItem(name, value) : localStorage.removeItem(name); } catch {} }
 function recalled(name) { try { return localStorage.getItem(name) || ''; } catch { return ''; } }
-apiUrl = recalled('sebi-cobalt-server') || apiUrl;
+// Download service is configured once by the owner, never by visitors.
+remember('sebi-cobalt-server', '');
 
 function showStatus(text, error = false, target = status) {
   target.textContent = text;
@@ -32,9 +31,10 @@ function serverUrl(value) {
   return url.href;
 }
 function refreshConnection() {
-  $('#connection-text').textContent = apiUrl ? 'Server configured' : 'Connect download server';
-  $('#connection-button').classList.toggle('connected', Boolean(apiUrl));
+  $('#connection-text').textContent = apiUrl ? 'Download service connected' : 'Downloads getting ready';
+  $('#connection-badge').classList.toggle('connected', Boolean(apiUrl));
   $('#setup-note').hidden = Boolean(apiUrl);
+  $('#download-button').disabled = !apiUrl;
 }
 function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
@@ -49,50 +49,23 @@ $('#theme-toggle').addEventListener('click', () => {
   setTheme(next); remember('sebi-theme', next);
 });
 
-function openSettings() {
-  $('#server-url').value = apiUrl;
-  $('#api-key').value = apiKey;
-  showStatus('', false, $('#settings-status'));
-  settings.showModal();
-}
-['#settings-button', '#connection-button', '#setup-button'].forEach(selector => $(selector).addEventListener('click', openSettings));
-$('#close-settings').addEventListener('click', () => settings.close());
-$('#settings-form').addEventListener('submit', event => {
-  event.preventDefault();
-  if (busy) { showStatus('Finish or cancel the current download before changing servers.', true, $('#settings-status')); return; }
-  try {
-    const address = serverUrl($('#server-url').value);
-    apiUrl = address;
-    apiKey = $('#api-key').value.trim();
-    remember('sebi-cobalt-server', apiUrl);
-    refreshConnection(); clearResults(); settings.close();
-    showStatus('Server configured. Paste a link to try your first download.');
-  } catch (error) { showStatus(error.message || 'Enter your download server address.', true, $('#settings-status')); }
-});
-$('#forget-server').addEventListener('click', () => {
-  if (busy) { showStatus('Finish or cancel the current download first.', true, $('#settings-status')); return; }
-  apiUrl = ''; apiKey = ''; remember('sebi-cobalt-server', '');
-  $('#server-url').value = ''; $('#api-key').value = '';
-  refreshConnection(); clearResults(); settings.close(); showStatus('Server disconnected.');
-});
-
 function clearResults() { $('#results').replaceChildren(); $('#results').hidden = true; }
 function setBusy(value) {
   busy = value;
-  $('#download-button').disabled = value;
+  $('#download-button').disabled = value || !apiUrl;
   document.querySelectorAll('.file-row button').forEach(button => { button.disabled = value; });
   $('#progress-area').hidden = !value;
   if (value) $('#progress').removeAttribute('value');
 }
 function friendlyError(code, httpStatus) {
   if (httpStatus === 429 || code?.includes('rate')) return 'The server is busy or has reached its request limit. Please try again later.';
-  if (code?.includes('auth') || code?.includes('turnstile') || [401, 403].includes(httpStatus)) return 'This server requires access or a browser challenge. Ask its operator to enable this website, or connect your own server in settings.';
+  if (code?.includes('auth') || code?.includes('turnstile') || [401, 403].includes(httpStatus)) return 'The download service needs attention. Please try again later; no setup is needed on your device.';
   if (code?.includes('private')) return 'This content is private and cannot be downloaded.';
-  if (code?.includes('unsupported')) return 'This link or website is not supported by your download server.';
+  if (code?.includes('unsupported')) return 'This link or website is not supported yet.';
   if (code?.includes('unavailable')) return 'The media is unavailable. Try another public link.';
   if (code?.includes('too_long')) return 'This video exceeds the server’s duration limit.';
-  if (code?.includes('youtube.login') || code?.includes('session') || code?.includes('token')) return 'YouTube needs additional setup on your download server. Ask its operator to check the YouTube configuration.';
-  return `The download server could not process this link${code ? ` (${code})` : ''}. Try another link or check your server.`;
+  if (code?.includes('youtube.login') || code?.includes('session') || code?.includes('token')) return 'YouTube downloads are temporarily unavailable. Please try again later.';
+  return `The download server could not process this link${code ? ` (${code})` : ''}. Try another link or try again later.`;
 }
 function filenameSafe(name, fallback) {
   return String(name || fallback).replace(/[\x00-\x1f/\\]/g, '_').slice(0, 200) || fallback;
@@ -113,19 +86,18 @@ $('#save-form').addEventListener('submit', async event => {
   try { mediaUrl = safeUrl(input.value).href; }
   catch { input.setAttribute('aria-invalid', 'true'); showStatus('Paste a complete public link beginning with https://.', true); input.focus(); return; }
   input.removeAttribute('aria-invalid');
-  if (!apiUrl) { showStatus('Connect a download server in settings first. Your link will stay here.', true); openSettings(); return; }
+  if (!apiUrl) { showStatus('Downloads aren’t ready yet. Please check back soon; there’s nothing to set up.', true); return; }
   const controller = new AbortController(); activeRequest = controller;
-  const timer = setTimeout(() => controller.abort(), 60000);
-  clearResults(); setBusy(true); showStatus('Finding your little download…');
+  const timer = setTimeout(() => controller.abort(), 180000);
+  clearResults(); setBusy(true); showStatus('Finding your little download… The service may take a minute to wake up.');
   try {
     const endpoint = serverUrl(apiUrl);
     const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
-    if (apiKey) headers.Authorization = `Api-Key ${apiKey}`;
     const response = await fetch(endpoint, {
       method: 'POST', headers, signal: controller.signal, redirect: 'error',
-      body: JSON.stringify({ url: mediaUrl, downloadMode: mode, videoQuality: $('#quality').value, audioFormat: 'mp3', localProcessing: 'disabled', filenameStyle: 'pretty' })
+      body: JSON.stringify({ url: mediaUrl, downloadMode: mode, videoQuality: $('#quality').value, audioFormat: 'mp3', localProcessing: 'disabled', alwaysProxy: true, filenameStyle: 'pretty' })
     });
-    const data = await response.json().catch(() => { throw new Error('The server did not return a cobalt response. Check its address in settings.'); });
+    const data = await response.json().catch(() => { throw new Error('The download service is not ready yet. Please try again in a minute.'); });
     if (!response.ok || data.status === 'error') throw new Error(friendlyError(data.error?.code, response.status));
     if (['tunnel', 'redirect'].includes(data.status)) {
       addFile(data.url, filenameSafe(data.filename, mode === 'audio' ? 'sebi-audio.mp3' : 'sebi-video.mp4'));
@@ -138,12 +110,12 @@ $('#save-form').addEventListener('submit', async event => {
       if (data.audio) addFile(data.audio, filenameSafe(data.audioFilename, 'sebi-audio.mp3'));
       if (!$('#results').children.length) throw new Error('The post has no downloadable files.');
     } else if (data.status === 'local-processing') {
-      throw new Error('This server only offers browser processing for this file. Connect a server that supports server-side processing.');
-    } else { throw new Error('The server returned an unsupported response. Check your server version.'); }
+      throw new Error('This file needs processing that isn’t available yet. Please try another format or link.');
+    } else { throw new Error('The download service returned an unexpected response. Please try again later.'); }
     showStatus('Your find is ready. Choose Save file to keep it.');
   } catch (error) {
     clearResults();
-    showStatus(controller.signal.aborted ? 'Request stopped. You can try again.' : error instanceof TypeError ? 'Could not reach your server. Check that it is running and allows this website to connect.' : error.message, true);
+    showStatus(controller.signal.aborted ? 'Request stopped. You can try again.' : error instanceof TypeError ? 'The download service could not be reached. Please try again in a minute.' : error.message, true);
   } finally { clearTimeout(timer); if (activeRequest === controller) activeRequest = null; setBusy(false); }
 });
 
@@ -177,7 +149,7 @@ async function saveFile(url, filename) {
     setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
     showStatus('File sent to your browser’s downloads. A little find, kept.');
   } catch (error) {
-    showStatus(controller.signal.aborted ? 'Download stopped. You can try again.' : error instanceof TypeError ? 'This file could not be downloaded here. Its server may block browser downloads, or the link may have expired. Check your backend’s proxy settings.' : error.message, true);
+    showStatus(controller.signal.aborted ? 'Download stopped. You can try again.' : error instanceof TypeError ? 'This file could not be downloaded here. The link may have expired. Get a new download link and try again.' : error.message, true);
   } finally { clearTimeout(timer); if (activeRequest === controller) activeRequest = null; setBusy(false); }
 }
 

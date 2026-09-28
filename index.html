@@ -13,7 +13,7 @@
 <body>
 <header class="nav wrap">
 <a class="wordmark" href="./">sebi<span>.cobalt</span><i aria-hidden="true">✳</i></a>
-<div class="header-actions"><nav aria-label="Main navigation"><a href="https://sebidc.github.io/sebi.emojis/">sebi.emojis ↗</a><button id="settings-button" type="button">settings</button><a href="https://github.com/sebidc/sebi.cobalt">GitHub ↗</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode"><span aria-hidden="true">☀</span><span class="theme-label">Light mode</span></button></div>
+<div class="header-actions"><nav aria-label="Main navigation"><a href="https://sebidc.github.io/sebi.emojis/">sebi.emojis ↗</a><a href="https://github.com/sebidc/sebi.cobalt">GitHub ↗</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode"><span aria-hidden="true">☀</span><span class="theme-label">Light mode</span></button></div>
 </header>
 <main>
 <section class="hero wrap" aria-labelledby="title">
@@ -21,7 +21,7 @@
 <div class="hero-art" aria-hidden="true"><div class="orbit"></div><span class="art-note">good finds.<br>little keeps.</span><img class="hero-headphones" src="assets/stickers/headphones.png" alt=""><img class="hero-camera" src="assets/stickers/camera.png" alt=""><img class="hero-drink" src="assets/stickers/bubble-tea.png" alt=""><span class="art-star star-one">✳</span><span class="art-star star-two">✧</span><span class="art-tag">a little keeper energy</span></div>
 </section>
 <section class="downloader wrap" id="save" aria-labelledby="save-title">
-<div class="section-heading"><div><p class="eyebrow">SAVE SOMETHING GOOD</p><h2 id="save-title">Keep your little find.</h2></div><button class="connection" id="connection-button" type="button"><span class="connection-dot"></span><span id="connection-text">Connect download server</span></button></div>
+<div class="section-heading"><div><p class="eyebrow">SAVE SOMETHING GOOD</p><h2 id="save-title">Keep your little find.</h2></div><span class="connection" id="connection-badge"><span class="connection-dot"></span><span id="connection-text">Downloads getting ready</span></span></div>
 <form id="save-form" novalidate>
 <label class="sr-only" for="media-url">Public video, audio, or post URL</label><div class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 13 4-4m-5 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m0 10a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-1 1"/></svg><input id="media-url" type="url" placeholder="Paste your video, song, or post link…" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="status"><button id="paste-button" class="paste-button" type="button">Paste</button></div>
 <div class="options-row"><div class="modes" role="group" aria-label="Download format"><button type="button" data-mode="auto" aria-pressed="true">Video + audio</button><button type="button" data-mode="audio" aria-pressed="false">Audio only</button><button type="button" data-mode="mute" aria-pressed="false">Video only</button></div><label class="quality-label">Quality <select id="quality"><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="max">Best available</option></select></label></div>
@@ -30,12 +30,12 @@
 <p id="status" class="status" role="status" aria-live="polite"></p>
 <div id="progress-area" hidden><progress id="progress" max="100" aria-label="Download progress"></progress><button id="cancel-button" class="small-button" type="button">Cancel</button></div>
 <div id="results" class="results" aria-label="Files ready to download" hidden></div>
-<div class="setup-note" id="setup-note"><span aria-hidden="true">✳</span><p><strong>One little setup step.</strong> Connect your download server in settings to start saving. This website is ready; a server hasn’t been connected yet.</p><button id="setup-button" class="text-button" type="button">Connect server →</button></div>
+<div class="setup-note" id="setup-note"><span aria-hidden="true">✳</span><p><strong>Getting your downloads ready.</strong> The download service is being connected. Check back soon—there’s nothing you need to set up.</p></div>
 </section>
 <section class="details wrap" aria-label="How downloading works"><div><span class="detail-icon">01</span><h3>Find something good.</h3><p>Copy a public video, audio, or post link.</p></div><div><span class="detail-icon">02</span><h3>Make it your format.</h3><p>Choose video, audio, or a silent clip.</p></div><div><span class="detail-icon">03</span><h3>Keep it right here.</h3><p>Save the file without leaving this page.</p></div></section>
 </main>
 <footer class="wrap"><a class="wordmark" href="./">sebi<span>.cobalt</span></a><p>Made for all the little moments.</p><a href="https://github.com/imputnet/cobalt">built for cobalt servers ↗</a></footer>
-<dialog id="settings-dialog" aria-labelledby="settings-title"><button class="close" id="close-settings" type="button" aria-label="Close settings">×</button><p class="eyebrow">YOUR LITTLE SETUP</p><h2 id="settings-title">Connect your server.</h2><p>Use a cobalt server you run, or one whose owner allows this website to connect. Meowing.de’s protected server isn’t connected here.</p><form id="settings-form"><label for="server-url">Download server address</label><input id="server-url" type="url" placeholder="https://your-server.example/" autocomplete="off"><label for="api-key">API key <span>(optional)</span></label><input id="api-key" type="password" autocomplete="off" placeholder="Only if your server needs one"><p class="settings-fine">The address is remembered on this device. The key is only kept for this open page and is sent only to your server.</p><p id="settings-status" class="status" role="status"></p><div class="settings-buttons"><button class="button primary" type="submit">Save connection</button><button id="forget-server" class="button secondary" type="button">Disconnect</button></div></form></dialog>
-<noscript><p class="wrap">Enable JavaScript to connect your server and download files.</p></noscript>
+
+<noscript><p class="wrap">Enable JavaScript to download files.</p></noscript>
 </body>
 </html>
