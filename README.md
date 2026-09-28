@@ -16,7 +16,7 @@ The frontend is hosted on GitHub Pages. The official cobalt backend is deployed 
 
 1. Sign in to Render as the site owner and create a Blueprint from this repository using `render.yaml`.
 2. Confirm the service uses the **Free** compute plan. The Blueprint requests only one free web service, no paid disk or database.
-3. Render builds `backend/Dockerfile`, which wraps cobalt's official `ghcr.io/imputnet/cobalt:11` image. The startup script uses `RENDER_EXTERNAL_URL` automatically so generated download tunnels have the correct address.
+3. Render builds `backend/Dockerfile`, which pins cobalt 11.7.1's official image and runs a private YouTube session provider in the same container. The startup script uses `RENDER_EXTERNAL_URL` automatically so generated download tunnels have the correct address.
 4. After deployment, connect the actual Render service URL once:
    ```sh
    node scripts/connect-backend.mjs https://ACTUAL-SERVICE.onrender.com/
@@ -44,4 +44,4 @@ Local preview: `python3 -m http.server 8087 --bind 127.0.0.1`, then open `http:/
 
 The slate/cream/green palette, typography, header, hero layout, and Sebi sticker assets match the user's [sebi.emojis repository](https://github.com/sebidc/sebi.emojis). Fonts, icon, and three sticker assets were copied at the user's request and retain their original ownership and license terms. The MIT license applies to original code written for this repository, not those assets.
 
-Original downloader API: [imputnet/cobalt](https://github.com/imputnet/cobalt). Initial reference: [cobalt.meowing.de](https://cobalt.meowing.de/). No cobalt API source, mascots, backend credentials, or protected-site authentication tokens are copied into this frontend. This project is unaffiliated with those operators.
+Original downloader API: [imputnet/cobalt](https://github.com/imputnet/cobalt), under AGPL-3.0. `backend/patch-cobalt.mjs` publishes the small API changes under the same license: JSON session requests and web-session selection at all resolutions. The pinned upstream source and complete changes are linked in that file. The private [bgutil provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider/tree/37169ee2656e08c5c2e5dc9df4c598c0cb4c88a8) is GPL-3.0-only; its license is included in the container. It binds only to 127.0.0.1 and uses the same outbound IP as cobalt. Initial reference: [cobalt.meowing.de](https://cobalt.meowing.de/). No cobalt API source, mascots, backend credentials, or protected-site authentication tokens are copied into this frontend. This project is unaffiliated with those operators.

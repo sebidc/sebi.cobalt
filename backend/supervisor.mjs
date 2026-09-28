@@ -23,7 +23,7 @@ process.on('SIGTERM', () => stop());
 process.on('SIGINT', () => stop());
 // Only the cobalt API is public. The token provider binds to loopback.
 process.env.YOUTUBE_SESSION_SERVER = 'http://127.0.0.1:4416';
-process.env.YOUTUBE_SESSION_INNERTUBE_CLIENT = 'WEB_EMBEDDED';
+process.env.YOUTUBE_SESSION_INNERTUBE_CLIENT ||= 'WEB';
 run(['/app/session-provider/build/main.js', '--host', '127.0.0.1', '--port', '4416']);
 let ready = false;
 for (let attempt = 0; attempt < 60 && !stopping; attempt++) {
