@@ -17,3 +17,28 @@ const start = source.indexOf('    let useSession =');
 const end = source.indexOf('    // we can get subtitles', start);
 if (start < 0 || end < start || !source.slice(start, end).includes('quality > 1080')) throw new Error('YouTube session patch does not match');
 await writeFile(youtube, source.slice(0, start) + '    let useSession = Boolean(env.ytSessionServer && !useHLS);\n\n' + source.slice(end));
+// Current web tokens are bound to the video ID, not just visitor data.
+await replaceOnce(youtube, '    let info;\n    try {\n        info = await yt.getBasicInfo(o.id, { client: innertubeClient });', `    let info;
+    let videoPoToken;
+    const bindVideoToken = (value) => {
+        if (!videoPoToken) return value;
+        const url = new URL(value);
+        url.searchParams.set('pot', videoPoToken);
+        return url.href;
+    };
+    try {
+        if (useSession) {
+            const endpoint = new URL('/get_pot', env.ytSessionServer);
+            const response = await fetch(endpoint, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content_binding: o.id, innertube_context: yt.session.context }),
+                signal: AbortSignal.timeout(30000)
+            });
+            const token = await response.json();
+            if (!response.ok || !token.poToken) throw new Error('YouTube video token unavailable');
+            videoPoToken = token.poToken;
+        }
+        info = await yt.getBasicInfo(o.id, { client: innertubeClient, po_token: videoPoToken });`);
+await replaceOnce(youtube, 'urls = await audio.decipher(innertube.session.player);', 'urls = bindVideoToken(await audio.decipher(innertube.session.player));');
+await replaceOnce(youtube, 'video = await video.decipher(innertube.session.player);', 'video = bindVideoToken(await video.decipher(innertube.session.player));');
+await replaceOnce(youtube, 'audio = await audio.decipher(innertube.session.player);', 'audio = bindVideoToken(await audio.decipher(innertube.session.player));');
