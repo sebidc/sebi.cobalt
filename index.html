@@ -2,8 +2,8 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>sebi.cobalt — a little save for every moment</title>
-<meta name="description" content="Save public videos, audio, and photos in one little corner of the internet.">
+<title>sebi.cobalt — save what you love</title>
+<meta name="description" content="A little downloader for public videos, audio and photos.">
 <meta name="theme-color" content="#333c43"><meta name="referrer" content="no-referrer">
 <link rel="icon" href="assets/icon.png"><link rel="stylesheet" href="style.css">
 <link rel="preload" href="assets/fonts/agrandir-grand-heavy.woff2" as="font" type="font/woff2" crossorigin>
@@ -11,31 +11,32 @@
 <script src="config.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
-<header class="nav wrap">
-<a class="wordmark" href="./">sebi<span>.cobalt</span><i aria-hidden="true">✳</i></a>
-<div class="header-actions"><nav aria-label="Main navigation"><a href="https://sebidc.github.io/sebi.emojis/">sebi.emojis ↗</a><a href="https://github.com/sebidc/sebi.cobalt">GitHub ↗</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode"><span aria-hidden="true">☀</span><span class="theme-label">Light mode</span></button></div>
-</header>
-<main>
-<section class="hero wrap" aria-labelledby="title">
-<div class="hero-copy"><p class="eyebrow"><span></span> THE LITTLE SEBI DOWNLOADER</p><h1 id="title">A little save.<br>For every <em>moment.</em></h1><p class="intro">For the songs on repeat, favorite clips, and things worth keeping. Paste a link. Make it yours.</p><a class="text-link" href="#save">save something good <span>↓</span></a><p class="fine">Videos · audio · photos · all in one little place</p></div>
-<div class="hero-art" aria-hidden="true"><div class="orbit"></div><span class="art-note">good finds.<br>little keeps.</span><img class="hero-headphones" src="assets/stickers/headphones.png" alt=""><img class="hero-camera" src="assets/stickers/camera.png" alt=""><img class="hero-drink" src="assets/stickers/bubble-tea.png" alt=""><span class="art-star star-one">✳</span><span class="art-star star-two">✧</span><span class="art-tag">a little keeper energy</span></div>
-</section>
-<section class="downloader wrap" id="save" aria-labelledby="save-title">
-<div class="section-heading"><div><p class="eyebrow">SAVE SOMETHING GOOD</p><h2 id="save-title">Keep your little find.</h2></div><span class="connection" id="connection-badge"><span class="connection-dot"></span><span id="connection-text">Downloads getting ready</span></span></div>
+<aside class="rail" aria-label="Navigation">
+<a class="brand-star" href="./" aria-label="sebi.cobalt home">✳</a>
+<a class="rail-save" href="#save" aria-label="Save media"><span aria-hidden="true">↓</span><span>save</span></a>
+<div class="rail-bottom"><a class="emoji-link" href="https://sebidc.github.io/sebi.emojis/" aria-label="sebi.emojis"><span aria-hidden="true">☺</span><span>emojis</span></a><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode"><span aria-hidden="true">☀</span><span class="theme-label">Light mode</span></button></div>
+</aside>
+<main class="workspace">
+<header class="topbar"><button id="services-button" class="services-button" type="button" aria-haspopup="dialog"><span aria-hidden="true">＋</span> supported sites</button></header>
+<section class="save-space" id="save" aria-labelledby="save-title">
+<div class="mascot" aria-hidden="true"><img class="mascot-main" src="assets/stickers/headphones.png" alt=""><img class="mascot-small camera" src="assets/stickers/camera.png" alt=""><img class="mascot-small drink" src="assets/stickers/bubble-tea.png" alt=""></div>
+<h1 id="save-title">sebi<span>.cobalt</span></h1><p class="tagline">a little save for what you love.</p>
 <form id="save-form" novalidate>
-<label class="sr-only" for="media-url">Public video, audio, or post URL</label><div class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 13 4-4m-5 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m0 10a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-1 1"/></svg><input id="media-url" type="url" placeholder="Paste your video, song, or post link…" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="status"><button id="paste-button" class="paste-button" type="button">Paste</button></div>
-<div class="options-row"><div class="modes" role="group" aria-label="Download format"><button type="button" data-mode="auto" aria-pressed="true">Video + audio</button><button type="button" data-mode="audio" aria-pressed="false">Audio only</button><button type="button" data-mode="mute" aria-pressed="false">Video only</button></div><label class="quality-label">Quality <select id="quality"><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="max">Best available</option></select></label></div>
-<div class="submit-row"><p>Your download happens here.<br><span>For public content you have permission to save.</span></p><button id="download-button" class="button primary" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>Get download</button></div>
+<label class="sr-only" for="media-url">Public video, audio, or post URL</label>
+<div class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 13 4-4m-5 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m0 10a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-1 1"/></svg><input id="media-url" type="url" placeholder="paste the link here" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="status"><button id="paste-button" class="paste-button" type="button">📋 <span>paste</span></button></div>
+<div class="options-row"><div class="modes" role="group" aria-label="Download format"><button type="button" data-mode="auto" aria-pressed="true">✨ auto</button><button type="button" data-mode="audio" aria-pressed="false">🎵 audio</button><button type="button" data-mode="mute" aria-pressed="false">🔇 mute</button></div><button id="download-button" class="button primary" type="submit">download <span aria-hidden="true">↓</span></button></div>
+<details class="options"><summary>quality options</summary><label class="quality-label" for="quality">Video quality <select id="quality"><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option><option value="max">Best available</option></select></label></details>
 </form>
 <p id="status" class="status" role="status" aria-live="polite"></p>
 <div id="progress-area" hidden><progress id="progress" max="100" aria-label="Download progress"></progress><button id="cancel-button" class="small-button" type="button">Cancel</button></div>
 <div id="results" class="results" aria-label="Files ready to download" hidden></div>
-<div class="setup-note" id="setup-note"><span aria-hidden="true">✳</span><p><strong>Getting your downloads ready.</strong> The download service is being connected. Check back soon—there’s nothing you need to set up.</p></div>
+<div id="setup-note" class="setup-note">Downloads are getting ready. There’s nothing to set up on your device.</div>
 </section>
-<section class="details wrap" aria-label="How downloading works"><div><span class="detail-icon">01</span><h3>Find something good.</h3><p>Copy a public video, audio, or post link.</p></div><div><span class="detail-icon">02</span><h3>Make it your format.</h3><p>Choose video, audio, or a silent clip.</p></div><div><span class="detail-icon">03</span><h3>Keep it right here.</h3><p>Save the file without leaving this page.</p></div></section>
+<footer><span class="connection" id="connection-badge"><span class="connection-dot"></span><span id="connection-text">Downloads getting ready</span></span><p>Only save public content you have permission to keep.</p><a href="https://github.com/sebidc/sebi.cobalt">GitHub ↗</a></footer>
 </main>
-<footer class="wrap"><a class="wordmark" href="./">sebi<span>.cobalt</span></a><p>Made for all the little moments.</p><a href="https://github.com/imputnet/cobalt">built for cobalt servers ↗</a></footer>
-
-<noscript><p class="wrap">Enable JavaScript to download files.</p></noscript>
+<dialog id="services-dialog" aria-labelledby="services-title"><button id="services-close" class="close" type="button" aria-label="Close supported sites">×</button><h2 id="services-title">supported sites<span>✳</span></h2><p class="dialog-intro">Videos, audio and photos. Availability varies by site and link.</p><ul class="services-list">
+<li>YouTube <small class="limited">blocked on this server</small></li><li>TikTok</li><li>Instagram</li><li>Facebook</li><li>X / Twitter</li><li>Reddit</li><li>Bluesky <small>image tested</small></li><li>SoundCloud</li><li>Streamable <small>video tested</small></li><li>Vimeo <small class="limited">limited</small></li><li>Pinterest</li><li>Twitch clips</li><li>Snapchat</li><li>Tumblr</li><li>Dailymotion</li><li>Bilibili</li><li>Loom</li><li>Newgrounds</li><li>VK</li><li>OK.ru</li><li>Rutube</li>
+</ul><p class="services-note">These sites are enabled in cobalt. Private, restricted or unavailable posts may not download. YouTube and Vimeo are currently failing on this server.</p></dialog>
+<noscript><p>Enable JavaScript to download files.</p></noscript>
 </body>
 </html>

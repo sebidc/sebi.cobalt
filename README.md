@@ -1,6 +1,6 @@
 # sebi.cobalt
 
-A personal cobalt frontend styled to match [sebi.emojis](https://sebidc.github.io/sebi.emojis/).
+A minimal cobalt frontend with one centered download form, an emoji mascot, a compact side rail, and a Supported sites dialog. Fonts and colors match [sebi.emojis](https://sebidc.github.io/sebi.emojis/).
 
 **Website:** https://sebidc.github.io/sebi.cobalt/
 
@@ -28,7 +28,7 @@ The prepared server permits the GitHub Pages origin, retains cobalt's rate limit
 
 Render's free services sleep after 15 idle minutes and can take about a minute to resume. This client allows three minutes for resolving a download and requests proxying for file downloads. Free bandwidth and outbound-traffic limits apply; without a payment method, services are suspended when included bandwidth is exhausted. This is a hobby setup, not unlimited public download hosting. See [Render's current free-service limitations](https://render.com/docs/free).
 
-Deployment checks confirmed that a public Streamable video resolves through this backend and returns MP4 bytes. YouTube currently returns `error.api.youtube.login` from this Render server; a Vimeo test returned `error.api.fetch.fail`. These platforms are not verified working. Platform support depends on the backend, its server IP, and any required platform session/cookie configuration. Do not copy credentials or challenge keys from another instance. Hosted cobalt instances require operator permission for external use: [cobalt API docs](https://github.com/imputnet/cobalt/blob/main/docs/api.md).
+Deployment checks confirmed that a public Streamable video resolves through this backend and returns MP4 bytes. YouTube continues to return `error.api.youtube.login` from this Render server after configuring session generation and testing embedded, web and mobile web playback, including video-bound tokens; a Vimeo test returned `error.api.fetch.fail`. These platforms are not verified working. Platform support depends on the backend, its server IP, and any required platform session/cookie configuration. Do not copy credentials or challenge keys from another instance. Hosted cobalt instances require operator permission for external use: [cobalt API docs](https://github.com/imputnet/cobalt/blob/main/docs/api.md).
 
 ## Download behavior
 
@@ -44,4 +44,4 @@ Local preview: `python3 -m http.server 8087 --bind 127.0.0.1`, then open `http:/
 
 The slate/cream/green palette, typography, header, hero layout, and Sebi sticker assets match the user's [sebi.emojis repository](https://github.com/sebidc/sebi.emojis). Fonts, icon, and three sticker assets were copied at the user's request and retain their original ownership and license terms. The MIT license applies to original code written for this repository, not those assets.
 
-Original downloader API: [imputnet/cobalt](https://github.com/imputnet/cobalt), under AGPL-3.0. `backend/patch-cobalt.mjs` publishes the small API changes under the same license: JSON session requests and web-session selection at all resolutions. The pinned upstream source and complete changes are linked in that file. The private [bgutil provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider/tree/37169ee2656e08c5c2e5dc9df4c598c0cb4c88a8) is GPL-3.0-only; its license is included in the container. It binds only to 127.0.0.1 and uses the same outbound IP as cobalt. Initial reference: [cobalt.meowing.de](https://cobalt.meowing.de/). No cobalt API source, mascots, backend credentials, or protected-site authentication tokens are copied into this frontend. This project is unaffiliated with those operators.
+Original downloader API: [imputnet/cobalt](https://github.com/imputnet/cobalt), under AGPL-3.0. `backend/patch-cobalt.mjs` publishes the small API changes under the same license: JSON session requests, mobile web-session selection at all resolutions, and video-bound playback/media tokens. The pinned upstream source and complete changes are linked in that file. The private [bgutil provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider/tree/37169ee2656e08c5c2e5dc9df4c598c0cb4c88a8) is GPL-3.0-only; its license is included in the container. It binds only to 127.0.0.1 and uses the same outbound IP as cobalt. Initial reference: [cobalt.meowing.de](https://cobalt.meowing.de/). No cobalt API source, mascots, backend credentials, or protected-site authentication tokens are copied into this frontend. This project is unaffiliated with those operators.

@@ -64,7 +64,8 @@ function friendlyError(code, httpStatus) {
   if (code?.includes('unsupported')) return 'This link or website is not supported yet.';
   if (code?.includes('unavailable')) return 'The media is unavailable. Try another public link.';
   if (code?.includes('too_long')) return 'This video exceeds the server’s duration limit.';
-  if (code?.includes('youtube.login') || code?.includes('session') || code?.includes('token')) return 'YouTube downloads are temporarily unavailable. Please try again later.';
+  if (code?.includes('youtube.login')) return 'YouTube is blocking downloads from this server. You can still try links from other supported sites.';
+  if (code?.includes('session') || code?.includes('token')) return 'The download service is refreshing its connection. Please try again in a minute.';
   return `The download server could not process this link${code ? ` (${code})` : ''}. Try another link or try again later.`;
 }
 function filenameSafe(name, fallback) {
@@ -169,3 +170,11 @@ refreshConnection();
 if (location.hash.length > 1 && location.hash !== '#save') {
   try { input.value = safeUrl(decodeURIComponent(location.hash.slice(1))).href; } catch {}
 }
+
+const servicesDialog = $('#services-dialog');
+$('#services-button').addEventListener('click', () => servicesDialog.showModal());
+$('#services-close').addEventListener('click', () => servicesDialog.close());
+servicesDialog.addEventListener('click', event => {
+  const bounds = servicesDialog.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) servicesDialog.close();
+});
