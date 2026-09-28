@@ -179,14 +179,21 @@ function closeServices() {
   servicesDialog.classList.add('is-closing');
   servicesCloseTimer = setTimeout(() => servicesDialog.close(), 160);
 }
-$('#services-button').addEventListener('click', () => servicesDialog.showModal());
+$('#services-button').addEventListener('click', () => {
+  servicesDialog.show();
+  $('#services-button').setAttribute('aria-expanded', 'true');
+});
 $('#services-close').addEventListener('click', closeServices);
 servicesDialog.addEventListener('cancel', event => { event.preventDefault(); closeServices(); });
 servicesDialog.addEventListener('close', () => {
   clearTimeout(servicesCloseTimer);
   servicesDialog.classList.remove('is-closing');
+  $('#services-button').setAttribute('aria-expanded', 'false');
+  if (servicesDialog.contains(document.activeElement)) $('#services-button').focus();
 });
-servicesDialog.addEventListener('click', event => {
-  const bounds = servicesDialog.getBoundingClientRect();
-  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeServices();
+document.addEventListener('pointerdown', event => {
+  if (!servicesDialog.contains(event.target) && !$('#services-button').contains(event.target)) closeServices();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && servicesDialog.open) { event.preventDefault(); closeServices(); }
 });
