@@ -28,7 +28,7 @@ The prepared server permits the GitHub Pages origin, retains cobalt's rate limit
 
 Render's free services sleep after 15 idle minutes and can take about a minute to resume. This client allows three minutes for resolving a download and requests proxying for file downloads. Free bandwidth and outbound-traffic limits apply; without a payment method, services are suspended when included bandwidth is exhausted. This is a hobby setup, not unlimited public download hosting. See [Render's current free-service limitations](https://render.com/docs/free).
 
-Platform support depends on the backend, its server IP, and any required platform session/cookie configuration. In particular, a fresh server might need additional setup for YouTube. Do not copy credentials or challenge keys from another instance. Hosted cobalt instances require operator permission for external use: [cobalt API docs](https://github.com/imputnet/cobalt/blob/main/docs/api.md).
+Deployment checks confirmed that a public Streamable video resolves through this backend and returns MP4 bytes. YouTube currently returns `error.api.youtube.login` from this Render server; a Vimeo test returned `error.api.fetch.fail`. These platforms are not verified working. Platform support depends on the backend, its server IP, and any required platform session/cookie configuration. Do not copy credentials or challenge keys from another instance. Hosted cobalt instances require operator permission for external use: [cobalt API docs](https://github.com/imputnet/cobalt/blob/main/docs/api.md).
 
 ## Download behavior
 
